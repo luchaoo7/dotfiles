@@ -29,3 +29,24 @@ alias i="ls -i" #get inode number
 # can also use 'stat -c %i "plus file/directory name"', but not without
 
 alias imagemeta="exiftool"
+
+alias bu="clear"
+
+alias mv="mv -v"
+
+#alias gcc="gcc -Wunused-variable"
+alias gcc="gcc"
+
+alias tasker=". ~/.local/share/virtualenvs/aldo-dan-project/bin/activate"
+alias ldjango=". ~/django-reboot-python3/bin/activate"
+
+#python for nba website
+alias nba="source ~/learning_nba_api/python3-env/bin/activate && cd ~/website_nba"
+alias flask="source ~/python-environments/p3.6-flask/bin/activate && cd ~/learning_flask"
+
+alias sshp="ssh -p 16161"
+alias poker=" wine ~/.wine/drive_c/'Program Files'/PokerStars.NET/PokerStars.exe &"
+
+alias ggrep='grep --color -R --exclude-dir=node_modules -n'
+alias grep='grep --color=auto'
+

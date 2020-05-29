@@ -24,6 +24,13 @@ set number
 set nocompatible              " be iMproved, required
 set showcmd
 
+set undodir=~/.vim/vimundo
+set undofile
+set undolevels=10000
+
+"Jump to the last positon when reopening a file
+:au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
 "Show statusline always
 set laststatus=2
 set nowrap
@@ -42,6 +49,7 @@ filetype indent on
 filetype plugin on                  " required
 
 
+
 " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
@@ -50,52 +58,48 @@ let g:tex_flavor='latex'
 "set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
+
+Plugin 'VundleVim/Vundle.vim'
+"sound a text
+Plugin 'tpope/vim-fugitive'
+"Need to go to the site and install 
+"DANIEL BROWN
+Plugin 'rstacruz/sparkup', {'rtp':'vim/'}
 " Python
 Plugin 'davidhalter/jedi-vim'
+let g:syntastic_python_python_exec = '/usr/bin/python3'
 " Open and close pairs
 Plugin 'jiangmiao/auto-pairs'
 " Read about it
-"Plugin 'scrooloose/nerdtree.git'
-" Syntax error alert
 Plugin 'scrooloose/syntastic'
-" check python errors
-"Plugin 'nvie/vim-flake8'
-Plugin 'Buffergator'
 " Html5
 Plugin 'othree/html5.vim'
-"sound a text
-Plugin 'tpope/vim-surround'
-
+"Both snippets needed to work
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets' 
+"HTML
+Plugin 'tristen/vim-sparkup'
+"Change mark up command
+let g:sparkupExecuteMapping="c-f" "original
+let g:sparkupExecuteMapping="<c-b>"
+"Help correct auto-indentation with python
+Plugin 'vim-scripts/indentpython.vim'
 "Formating text
 "Plugin 'LaTeX-Box-Team/LaTeX-Box'
 "Plugin 'vimlatex'
 "Both snippets needed to work
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets' 
-"Help correct auto-indentation with python
-Plugin 'vim-scripts/indentpython.vim'
-"Need to go to the site and install 
-"stand alone software
-"Plugin 'LanguageTool'
-Plugin 'rstacruz/sparkup'
-"HTML
-Plugin 'tristen/vim-sparkup'
 "Navigate between tmux and vim
 Plugin 'christoomey/vim-tmux-navigator'
-"let g:jedi#force_py_version=3
 "XML pluging works
 "Plugin 'sukima/xmledit'
-
-"php plugin
-Plugin 'shawncplus/phpcomplete.vim'
 
 Plugin 'rdnetto/YCM-Generator'
 Plugin 'stanangeloff/php.vim'
 
 "Pluggins for php auto-completion
-Plugin 'Shougo/vimproc'
-Plugin 'Shougo/unite.vim'
-Plugin 'm2mdas/phpcomplete-extended'
+"Plugin 'Shougo/vimproc'
+"Plugin 'Shougo/unite.vim'
+"Plugin 'm2mdas/phpcomplete-extended'
 
 "JavaScript plugin
 Plugin 'pangloss/vim-javascript'
@@ -107,13 +111,6 @@ Plugin 'c.vim'
 Plugin 'rip-rip/clang_complete'
 
 Plugin 'valloric/youcompleteme'
-
-"Latex
-Plugin 'gerw/vim-latex-suite'
-"view latex pdf
-
-"Latex preview
-Plugin 'alxhnr/latex_preview'
 
 "autocmd FileType tex setl updatetime=1
 
@@ -131,18 +128,16 @@ let g:UltiSnipsExpandTrigger="<c-b>"
 let g:ymc_key_list_select_completion=[]
 let g:ymc_key_list_previous_completion=[]
 
+"path to directory where clang library can be found
+let g:clang_library_path='/usr/lib/llvm-3.8/lib'
+let g:ycm_global_ycm_extra_conf="~/.ycm_extra_conf.py"
+
 "set omnifunc=phpcomplete#CompletePHP
 "autocmd  FileType  php set omnifunc=phpcomplete#CompletePHP
 set omnifunc=syntaxcomplete#Complete
 set completefunc=ClangComplete
 
-"path to directory where clang library can be found
-let g:clang_library_path='/usr/lib/llvm-3.8/lib'
 
-"change sparkup command
-let g:sparkupExecuteMapping="<c-b>"
-
-let g:syntastic_python_python_exec = '/usr/bin/python3'
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -170,6 +165,12 @@ map <c-j> <c-w><c-j>
 map <c-k> <c-w><c-k>
 map <c-h> <c-w><c-h>
 map <c-t> <c-w><c-l>
+
+" running python script from vim
+autocmd FileType python nnoremap <buffer> <F9> :exec '!clear && python' shellescape(@%, 1)<cr>
+
+" running c script from vim
+autocmd FileType c nnoremap <buffer> <F12> :exec '!clear && gcc' shellescape(@%, 1)<cr>
 
 " Unmap arro keys
 no <down> <Nop>
